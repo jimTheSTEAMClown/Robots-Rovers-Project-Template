@@ -1,7 +1,4 @@
-# My Title  
-This continues on the next line.
-# AI Vibe Coding Over Arching Rules For The Project  
-(Over Arching Rules)
+# AI Vibe Coding Over Arching Rules For The Project<BR>(Over Arching Rules)
 
 # 📘 Safe Documentation Rules for GitHub/VSCode Viewable Documentation
 
