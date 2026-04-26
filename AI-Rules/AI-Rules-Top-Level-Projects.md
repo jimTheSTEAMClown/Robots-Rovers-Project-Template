@@ -1,3 +1,5 @@
+# My Title  
+This continues on the next line.
 # AI Vibe Coding Over Arching Rules For The Project  
 (Over Arching Rules)
 
