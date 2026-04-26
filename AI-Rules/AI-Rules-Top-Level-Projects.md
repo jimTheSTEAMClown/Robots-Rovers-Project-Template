@@ -1,5 +1,5 @@
-# AI Vibe Coding Over Arching Rules For The Project 
-# (Over Arching Rules)
+# AI Vibe Coding Over Arching Rules For The Project  
+(Over Arching Rules)
 
 # 📘 Safe Documentation Rules for GitHub/VSCode Viewable Documentation
 
