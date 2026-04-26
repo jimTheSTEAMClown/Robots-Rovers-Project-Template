@@ -19,13 +19,14 @@ This section defines **documentation-specific rules** for AI-generated Markdown,
 # 🧾 2. Code Block Rules
 
 - ALWAYS specify a language in code blocks:
-  - ```html
-  - ```css
-  - ```javascript
-  - ```python
-- Never use unlabeled code fences
-- All code must be properly fenced
+  - `html`
+  - `css`
+  - `javascript`
+  - `python`
 
+- Never use unlabeled code fences (```)
+
+- All code must be properly fenced using the correct language tag
 ---
 
 # 📦 3. Copy-Paste Readiness Rule
