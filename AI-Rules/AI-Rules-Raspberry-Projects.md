@@ -65,7 +65,8 @@ Sensor model and operating range
 
 📁 3. Project Structure Rules ✏️
 Follow this structure. Every directory is a layer. Every layer has one job.
-textrover_<name>/                       ← project root (descriptive name, not generic)
+'''text
+rover_<name>/                       ← project root (descriptive name, not generic)
 │
 ├── <rover_name>.py                 ← entry point only (descriptive name, e.g.
 │                                     pi_rover_ultrasonic.py — not main.py)
@@ -98,6 +99,9 @@ textrover_<name>/                       ← project root (descriptive name, not 
 ├── requirements.txt                ← pinned runtime dependencies
 ├── requirements-dev.txt            ← adds pytest, python-dotenv
 └── README.md
+'''
+
+
 Layer rules (absolute — no exceptions):
 LayerMay import fromMust NOT import fromhal/pin_config.pynothingeverythingdrivers/hal/, gpiozero, pigpiocontrol/, config.pycontrol/utils/, standard librarygpiozero, pigpio, hal/, config.pyutils/standard library onlyeverything else in the projecttests/control/, utils/ via mocksgpiozero, pigpio, drivers/ directlyEntry pointeverything(injects all dependencies)
 __init__.py is required in every subdirectory ➕
