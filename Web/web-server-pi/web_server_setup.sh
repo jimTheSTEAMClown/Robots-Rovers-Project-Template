@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # =============================================================================
 # apache_setup.sh
 # Jim The STEAM Clown — Raspberry Pi Apache Web Server Setup Script
