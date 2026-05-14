@@ -3,8 +3,6 @@
 
 Jim The STEAM Clown Edition — Updated and expanded from the original draft
 to align with the Raspberry Pi Rover Architecture Guide.
-Changes from the original are marked: ✏️ updated · ➕ added · ✅ unchanged
-
 
 🧭 1. Core Design Philosophy ✅
 
@@ -15,17 +13,17 @@ Every file should have a clear single responsibility
 Every abstract concept should be grounded in a real-world analogy when explained
 
 
-🧱 2. Library & Hardware Rules ✏️
+📌 2. Library & Hardware Rules 
+Always use BCM chip numbering never BOARD.
+All constants in hal/pin_config.py are BCM numbers.
+
 Primary GPIO library: gpiozero
 Use gpiozero for all GPIO interactions. It provides clean, high-level classes
 (PWMOutputDevice, DigitalOutputDevice, DistanceSensor, LED) that map
 naturally to the abstract interfaces this architecture teaches.
-Backend: pigpio (always, not optional)
-Always configure gpiozero to use pigpio as its pin factory backend:
-pythonfrom gpiozero.pins.pigpio import PiGPIOFactory
-from gpiozero import Device
-Device.pin_factory = PiGPIOFactory(pin_numbering='BOARD')
+Always configure gpiozero to use BCM as its pin type:
 
+If a specific pin feature is needed, use pigpio.
 Why pigpio, not lgpio?
 pigpio uses DMA (Direct Memory Access) to generate hardware-quality PWM on
 all GPIO pins — not just the two hardware PWM pins. Without this, motor
@@ -33,22 +31,40 @@ speed control produces audible stutter under CPU load. lgpio's software PWM
 stutters on a loaded Pi 5. For any project driving motors, pigpio is required.
 Always document this choice with a comment in the driver file.
 
-pigpio daemon requirement
-pigpio requires its background daemon to be running before any script starts:
-bashsudo pigpiod
-# or at boot: sudo systemctl enable pigpiod
-Pin numbering: BOARD always
-Always use BOARD numbering (physical header pin positions 1–40), never BCM
-chip numbers. BOARD numbers are printed on every Pi pinout diagram next to the
-header edge. BCM numbers are the Broadcom internal chip identifiers — they do
-not match physical positions and vary between Pi models.
-Set BOARD mode once per driver file via PiGPIOFactory(pin_numbering='BOARD').
-All constants in hal/pin_config.py are BOARD numbers.
+Assume the project always contains:
+
+/hal
+    __init__.py
+    pin_config.py
+
+The generated script should ALWAYS import hardware pin definitions directly using:
+
+from hal.pin_config import (...)
+
+Do NOT generate any sys.path modifications.
+Do NOT dynamically search for the hal directory.
+Do NOT use os.path hacks.
+
+Assume the script is always located beside the /hal directory and that Python package imports will work correctly.
+
+Use the pin labels already defined in pin_config.py whenever possible.
+Note and document when these pin labels are not used.
+
+The code should:
+- use BCM GPIO numbering
+- be beginner friendly
+- include comments
+- use clean educational robotics coding style
+- work on Raspberry Pi OS
+- use gpiozero unless otherwise specified
+
+
 Standard library preference
 Use standard Python libraries whenever possible:
 time, math, threading, dataclasses, logging, signal, pathlib
 No other libraries without justification
-If a library outside gpiozero, pigpio, and the standard library is used,
+
+If a library outside gpiozero, and the standard library is used,
 the driver file must include a comment explaining:
 
 What the library does
@@ -58,7 +74,7 @@ What the install command is
 Document all hardware assumptions
 Every driver file must include a header comment stating:
 
-Pin numbers (BOARD convention)
+Pin numbers (BCM convention)
 Voltage levels (3.3 V vs 5 V) and any required level shifting
 Sensor model and operating range
 
@@ -126,7 +142,7 @@ PID gains, loop timing). Edit this when you tune the robot.
 A student tuning PID should never open pin_config.py.
 A student rewiring motors should never open config.py.
 
-🧠 4. Code Style Rules ✏️
+🧠 4. Code Style Rules 
 Naming
 
 ✅ left_motor_speed, MOTOR_LEFT_ENA, read_distance_cm()
@@ -164,7 +180,7 @@ This guarantees cleanup() is called even if the script crashes — Python has
 no destructor guarantee, and leaving GPIO pins active after a crash can keep
 motors running or damage hardware.
 
-🔁 5. Behavior & Control Rules ✅
+🔁 5. Behavior & Control Rules
 
 Use state-based logic (finite state machines) for multi-step behaviours
 Avoid deeply nested if statements — prefer small functions and early returns
@@ -174,9 +190,7 @@ sensing — driver reads hardware, returns abstract value
 decision-making — control layer interprets value, decides action
 actuation — driver applies the decision to hardware
 
-
-
-Dependency injection — required in all control classes ➕
+Dependency injection — required in all control classes
 Control classes must receive their driver objects as constructor arguments —
 never instantiate hardware inside a control class:
 python# ✅ Correct — drivers injected, class is testable
@@ -192,7 +206,7 @@ class ObstacleAvoider:
 The chef does not grow vegetables. The chef receives vegetables. The control
 class receives its tools — it does not build them.
 
-🧪 6. Testing & Debugging Rules ✏️
+🧪 6. Testing & Debugging Rules 
 Testing framework: pytest
 Use pytest for all unit tests. It is not a heavy framework — it is one
 pip install pytest and one command: python -m pytest tests/ -v. It is the
@@ -228,7 +242,7 @@ The lines above show the call stack (how execution got there).
 The five errors students will hit most often in this project structure:
 ErrorMost Common CauseFixModuleNotFoundError: No module named 'drivers'Missing __init__.pytouch drivers/__init__.pyImportError: cannot import name 'X'Typo in class nameCheck exact name in the moduleModuleNotFoundError: No module named 'pigpio'venv not activesource venv/bin/activateAttributeError: object has no attribute 'set_speed'Mock incompleteAdd missing method to mockCircular import errorLayer rule violatedTrace imports — remove the cycle
 
-⚡ 7. Safety Rules ✅ + ➕
+⚡ 7. Safety Rules 
 
 Always define a safe stop behaviour — motors default to OFF on any error
 Handle sensor failure gracefully: return last valid reading, log a warning,
@@ -245,7 +259,7 @@ finally:
     sensor.cleanup()
 Without finally, a crash leaves GPIO pins active. Motors may keep running.
 
-Signal handling required ➕
+Signal handling required 
 
 The entry point must handle SIGINT (Ctrl+C) and SIGTERM (systemd stop):
 pythonsignal.signal(signal.SIGINT,  handle_shutdown)
@@ -254,7 +268,7 @@ Without a signal handler, Ctrl+C terminates the process instantly with no
 GPIO cleanup. On Arduino, the board resets on power cycle. On Linux, nothing
 resets — GPIO pins stay in whatever state they were in.
 
-📚 8. Documentation Rules ✏️
+📚 8. Documentation Rules 
 Every module must include a header comment block stating:
 
 Purpose — one sentence describing the single responsibility of this file
@@ -294,19 +308,20 @@ pythonclass MotorDriver:
     def __repr__(self) -> str: ...
     def __enter__(self): return self
     def __exit__(self, *a): self.cleanup(); return False
-🔄 3. Sensor Interpretation ✅
+🔄 3. Sensor Interpretation 
 Convert raw sensor data into meaningful abstract values before returning:
 
 Raw ADC 0.0–1.0 → position −1.0 to +1.0
 Echo pulse time → distance in centimetres
 Apply exception handling — never crash the control loop on a sensor glitch
 
-🧭 4. Behaviour Design ✅
+🧭 4. Behaviour Design 
 Implement behaviours as state machines with named states (use enum.Enum).
 States should be named in plain language: FORWARD, CAUTION, STOP,
 REVERSE, TURN. Transitions should be logged at INFO level so the
 student can watch the state machine run in the terminal.
-🧪 5. Simulation Thinking ✏️
+
+🧪 5. Simulation Thinking 
 Do not use SIMULATION_MODE = True flags scattered through code. This
 approach creates if SIMULATION_MODE: branches everywhere and produces the
 same tangled architecture the project structure is designed to prevent.
@@ -320,7 +335,7 @@ avoider = ObstacleAvoider(MockMotorDriver(), MockSensorDriver(), MockLEDDriver()
 # On Pi — pass real drivers:
 avoider = ObstacleAvoider(MotorDriver(), UltrasonicDriver(), StatusLEDDriver())
 The entry point file is the only place this decision is made.
-🛠️ 6. Incremental Development ✅
+🛠️ 6. Incremental Development 
 Build in verified steps — never jump straight to full autonomy:
 
 Wire and test one motor in isolation
@@ -329,7 +344,7 @@ Write and test the driver for each
 Write and test control logic with mock drivers on a laptop
 Combine on hardware — only logic bugs remain at this point
 
-🧯 7. Debugging Awareness ✏️
+🧯 7. Debugging Awareness 
 Add logger.debug() calls at key points — sensor readings, state transitions,
 motor commands. Use a log format that includes timestamp and module name so
 students can trace execution across multiple files:
@@ -337,7 +352,7 @@ text2025-04-15 14:32:01 [control.obstacle_avoid ] INFO     FORWARD → STOP (12.
 2025-04-15 14:32:01 [drivers.motors         ] DEBUG    Motors → L=-0.45  R=-0.45
 This is far more useful than print(f"Distance: {distance}") because the
 student can see which file each line came from and filter by level.
-🎓 8. Teaching Awareness ✅
+🎓 8. Teaching Awareness 
 Every generated code block should be accompanied by:
 
 What it does — one sentence
@@ -346,10 +361,10 @@ Common mistake — what a student would write instead, and why it breaks
 Next challenge — one concrete thing the student could add or change
 
 
-🚫 Anti-Patterns (Explicitly Banned) ✏️
+🚫 Anti-Patterns (Explicitly Banned) 
 Anti-PatternWhy It's BannedGPIO code directly in the entry pointEntry point is orchestration only — hardware belongs in drivers/Hardcoded pin numbers in driver filesAll pins live in hal/pin_config.py — one file, one edit to rewireScripts longer than 200 lines without structureSplit into layers — single responsibility per fileUsing asyncio or ROS unless explicitly requestedAdds complexity before the student understands the synchronous modelMagic numbers with no name or explanationEvery constant needs a name in config.py or pin_config.pyCopy-paste duplication instead of functionsIf it appears twice, it should be a function in utils/SIMULATION_MODE = True flagsUse mock drivers and dependency injection insteadprint() for runtime diagnosticsUse logging — has levels, timestamps, file output, filteringlogging.basicConfig() in module filesConfigure logging once in utils/logger.py, called from entry point onlyInstantiating hardware inside control classesControl classes receive drivers — they do not build themMissing __init__.py in package directoriesPython cannot find the package — ModuleNotFoundError every timeRunning without a virtual environmentPollutes system Python — breaks other tools on the PiCommitting venv/, __pycache__/, or .env to GitUse .gitignore — these are generated or machine-specificMixing pin numbers and PID gains in the same filepin_config.py is for wiring, config.py is for tuning — never mix
 
-✅ The Three Architecture Self-Check Tests ➕
+✅ The Three Architecture Self-Check Tests 
 Before submitting or sharing any rover project, apply these three tests.
 If any test fails, the architecture has a problem that needs fixing first.
 Test 1 — The Sim Test
@@ -366,7 +381,7 @@ responsibility in under two minutes, and make a change without reading any
 other file? If yes, each file has a single clear responsibility. If no, the
 responsibilities are bleeding across layer boundaries.
 
-🌱 Environment & Deployment Rules ➕
+🌱 Environment & Deployment Rules 
 Virtual environments are required — not optional
 bashpython3 -m venv venv
 source venv/bin/activate      # always activate before running or installing
