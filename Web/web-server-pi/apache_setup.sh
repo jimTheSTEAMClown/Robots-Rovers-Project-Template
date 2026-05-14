@@ -301,6 +301,180 @@ verify_installation() {
 }
 
 # -----------------------------------------------------------------------------
+# SYSTEM & NETWORK REPORT
+# Logged at the end of the script — gives a full snapshot of the Pi's state
+# -----------------------------------------------------------------------------
+system_report() {
+    log_section "System & Network Report"
+
+    # ---- Hostname ----
+    log_info "Hostname:       $(hostname)"
+    log_info "FQDN:           $(hostname -f 2>/dev/null || echo 'n/a')"
+
+    # ---- OS & Kernel ----
+    local os_desc
+    os_desc=$(grep PRETTY_NAME /etc/os-release 2>/dev/null | cut -d= -f2 | tr -d '"')
+    log_info "OS:             ${os_desc:-unknown}"
+    log_info "Kernel:         $(uname -r)"
+    log_info "Architecture:   $(uname -m)"
+
+    # ---- Raspberry Pi model (if available) ----
+    if [[ -f /proc/device-tree/model ]]; then
+        local pi_model
+        pi_model=$(tr -d '\0' < /proc/device-tree/model)
+        log_info "Pi Model:       ${pi_model}"
+    fi
+
+    # ---- Uptime ----
+    log_info "Uptime:         $(uptime -p 2>/dev/null || uptime)"
+
+    # ---- Network interfaces — IP addresses & MAC addresses ----
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo "  NETWORK INTERFACES" >> "${LOG_FILE}"
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+    echo -e "${BOLD}  NETWORK INTERFACES${RESET}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+
+    # Loop over every active interface (skip loopback 'lo')
+    local interfaces
+    interfaces=$(ip -o link show | awk -F': ' '{print $2}' | grep -v '^lo$')
+
+    for iface in ${interfaces}; do
+        # MAC address
+        local mac
+        mac=$(ip link show "${iface}" | awk '/ether/ {print $2}')
+
+        # IPv4 address(es)
+        local ipv4
+        ipv4=$(ip -4 addr show "${iface}" 2>/dev/null \
+               | awk '/inet / {print $2}' \
+               | tr '\n' '  ' \
+               | sed 's/  *$//')
+
+        # IPv6 address(es) — skip link-local fe80 to keep output clean
+        local ipv6
+        ipv6=$(ip -6 addr show "${iface}" 2>/dev/null \
+               | awk '/inet6/ && !/fe80/ {print $2}' \
+               | tr '\n' '  ' \
+               | sed 's/  *$//')
+
+        log_info "Interface:      ${iface}"
+        log_info "  MAC Address:  ${mac:-n/a}"
+        log_info "  IPv4:         ${ipv4:-not assigned}"
+        log_info "  IPv6:         ${ipv6:-not assigned}"
+    done
+
+    # ---- Open / listening ports (focus on web-relevant ones) ----
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo "  LISTENING PORTS" >> "${LOG_FILE}"
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+    echo -e "${BOLD}  LISTENING PORTS${RESET}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+
+    # ss is available on all modern Pi OS; falls back to netstat if missing
+    if command -v ss &>/dev/null; then
+        local port_list
+        port_list=$(ss -tlnp 2>/dev/null | awk 'NR>1 {print "  " $4 "\t" $1 "\t" $6}')
+        log_info "Listening TCP ports (via ss):"
+        echo "${port_list}" | tee -a "${LOG_FILE}"
+    elif command -v netstat &>/dev/null; then
+        local port_list
+        port_list=$(netstat -tlnp 2>/dev/null | awk 'NR>2 {print "  " $4 "\t" $1 "\t" $7}')
+        log_info "Listening TCP ports (via netstat):"
+        echo "${port_list}" | tee -a "${LOG_FILE}"
+    else
+        log_warn "Neither ss nor netstat found — skipping port listing"
+    fi
+
+    # Explicit check for ports 80 and 443
+    for port in 80 443; do
+        if ss -tlnp 2>/dev/null | grep -q ":${port} "; then
+            log_ok "Port ${port} is OPEN and listening"
+        else
+            log_warn "Port ${port} is NOT listening"
+        fi
+    done
+
+    # ---- Apache version ----
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo "  APACHE INFO" >> "${LOG_FILE}"
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+    echo -e "${BOLD}  APACHE INFO${RESET}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+
+    if command -v apache2 &>/dev/null; then
+        local apache_ver
+        apache_ver=$(apache2 -v 2>/dev/null | head -1)
+        log_info "Apache version: ${apache_ver}"
+
+        # Config syntax test
+        log_info "Running Apache config test (apache2ctl configtest)..."
+        local config_result
+        config_result=$(apache2ctl configtest 2>&1)
+        if echo "${config_result}" | grep -q "Syntax OK"; then
+            log_ok "Apache config syntax: OK"
+        else
+            log_warn "Apache config test output:"
+            echo "${config_result}" | tee -a "${LOG_FILE}"
+        fi
+    else
+        log_warn "apache2 binary not found — skipping version and config check"
+    fi
+
+    # ---- Disk space ----
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo "  DISK SPACE" >> "${LOG_FILE}"
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+    echo -e "${BOLD}  DISK SPACE${RESET}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+
+    log_info "Disk usage (df -h):"
+    df -h --output=source,fstype,size,used,avail,pcent,target \
+        2>/dev/null | grep -v tmpfs | grep -v devtmpfs \
+        | tee -a "${LOG_FILE}"
+
+    # Warn if root partition is over 85% full
+    local root_usage
+    root_usage=$(df / | awk 'NR==2 {gsub(/%/,"",$5); print $5}')
+    if [[ "${root_usage}" -ge 85 ]]; then
+        log_warn "Root partition is ${root_usage}% full — consider cleaning up"
+    else
+        log_ok "Root partition disk usage: ${root_usage}% — OK"
+    fi
+
+    # ---- Memory / RAM ----
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo "  MEMORY" >> "${LOG_FILE}"
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+    echo -e "${BOLD}  MEMORY${RESET}"
+    echo -e "${BOLD}------------------------------------------------------------${RESET}"
+
+    log_info "Memory usage (free -h):"
+    free -h | tee -a "${LOG_FILE}"
+
+    # Warn if less than 100MB free
+    local free_mb
+    free_mb=$(free -m | awk '/^Mem:/ {print $7}')
+    if [[ "${free_mb}" -lt 100 ]]; then
+        log_warn "Available RAM is low: ${free_mb}MB free"
+    else
+        log_ok "Available RAM: ${free_mb}MB free — OK"
+    fi
+
+    # ---- Browser test reminder ----
+    echo "------------------------------------------------------------" >> "${LOG_FILE}"
+    local primary_ip
+    primary_ip=$(hostname -I | awk '{print $1}')
+    log_info "Browser test URL: http://${primary_ip}"
+    log_info "You should see the Apache2 default 'It works!' page"
+}
+
+# -----------------------------------------------------------------------------
 # WRAP-UP — print log file location
 # -----------------------------------------------------------------------------
 wrap_up() {
@@ -330,6 +504,7 @@ main() {
     run_apt_update           # Step 2
     install_apache           # Step 3
     verify_installation      # Post-install checks
+    system_report            # Network & system snapshot
     wrap_up
 }
 
