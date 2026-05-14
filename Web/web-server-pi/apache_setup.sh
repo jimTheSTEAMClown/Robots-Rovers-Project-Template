@@ -298,11 +298,6 @@ verify_installation() {
         fi
     fi
 
-    # Report local IP for browser test
-    local ip_addr
-    ip_addr=$(hostname -I | awk '{print $1}')
-    log_info "To verify in a browser, navigate to: http://${ip_addr}"
-    log_info "You should see the Apache2 default 'It works!' page"
 }
 
 # -----------------------------------------------------------------------------
