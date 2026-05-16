@@ -5,6 +5,8 @@ Jim The STEAM Clown Edition — Updated and expanded from the original draft
 to align with the Raspberry Pi Rover Architecture Guide.
 Changes from the original are marked: ✏️ updated · ➕ added · ✅ unchanged
 
+Note: Review and refine.
+write all results as a proper .md reference document, plus give a clean visual summary that is also md, and cut and pastable into tools like Google docs & Slide, as well as compatable with Github md documents.
 
 🧭 1. Core Design Philosophy ✅
 
