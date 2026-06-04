@@ -12,7 +12,7 @@
   - An inline Markdown preview in the chat (for copy-paste convenience), **and**
   - A downloadable `.md` file artifact.
 - Files must render correctly when pasted or committed directly into a **GitHub `.md` file**. Test mentally against GitHub's Markdown renderer before finalizing.
-- Before generating an .md file, check the file for anything that won't render cleanly on GitHub's Markdown renderer.
+- $\color{red}{Before \space generating \space an \space .md \space filered}$, check the file for anything that won't render cleanly on GitHub's Markdown renderer.
 - $\color{red}{This \space is \space red}$
 
 ---
