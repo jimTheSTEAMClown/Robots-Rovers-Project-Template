@@ -1,3 +1,4 @@
+--- Note - Do List: Update with section Varialbe / Parameters to make this a generic study guide with the addition of a topic --- 
 --- BEGIN PROMPT ---
 
 ## The Educational Role of the AI
