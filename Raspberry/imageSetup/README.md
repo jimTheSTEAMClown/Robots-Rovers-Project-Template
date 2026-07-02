@@ -2,6 +2,10 @@
 
 ## Raspbian Apps, Tools, Shell Scripts
 
+### Desktop
+
+### Server
+
 ## Ubuntu 24.04.4 Apps, Tools, Shell Scripts (Noble Numbat)
 
 ### Desktop
