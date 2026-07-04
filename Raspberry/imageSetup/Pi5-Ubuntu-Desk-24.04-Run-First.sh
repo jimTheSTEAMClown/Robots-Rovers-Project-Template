@@ -68,18 +68,9 @@ echo " "
 # Install the bare minimum tools needed by this script itself BEFORE any
 # prompted steps run. These are not guaranteed on a brand new Ubuntu 24.04
 # Desktop image and are required for later steps to succeed.
-#
-#   curl             - Used in Steps 7, 11 to download keys and installers
-#   wget             - Used in Step 10 to download Arduino IDE AppImage
-#   gnupg            - Required by apt to verify the Docker GPG signing key
-#   lsb-release      - Used by Docker repo setup to detect Ubuntu codename
-#   ca-certificates  - Required for HTTPS apt repo connections
-#   snapd            - Snap package manager; required for VS Code (Step 5)
-#   python3-distutils - Required by PlatformIO get-platformio.py installer
-#                       Removed from Python 3.12+ stdlib; must be installed
-#                       separately on Ubuntu 24.04
-#   xdg-desktop-portal-gnome - Required by gnome-remote-desktop for VNC
-#                       sharing toggle to work in Settings > Sharing
+echo "apt update -qq"
+echo "net-tools"
+echo "openssh-server"
 # ============================================================================
 echo " "
 echo "============================================================"
