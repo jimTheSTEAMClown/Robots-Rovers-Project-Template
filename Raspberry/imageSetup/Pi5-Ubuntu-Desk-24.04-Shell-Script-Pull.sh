@@ -55,7 +55,9 @@ if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
     sudo chmod 755 Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh
     sudo wget -O Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-LVR/refs/heads/main/ROS2/Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh 
     sudo chmod 755 Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh
-
+    sudo wget -O Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh
+    sudo chmod 755 Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh
+    
     ls *.sh
 
     echo " "
