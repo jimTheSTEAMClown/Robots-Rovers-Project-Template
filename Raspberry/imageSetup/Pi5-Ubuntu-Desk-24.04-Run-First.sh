@@ -63,28 +63,6 @@ echo "  All terminal output is being saved to that file."
 echo "============================================================"
 echo " "
 
-# ============================================================================
-# PRE-FLIGHT BOOTSTRAP
-# Install the bare minimum tools needed by this script itself BEFORE any
-# prompted steps run. These are not guaranteed on a brand new Ubuntu 24.04
-# Desktop image and are required for later steps to succeed.
-echo "apt update -qq"
-echo "net-tools"
-echo "openssh-server"
-# ============================================================================
-echo " "
-echo "============================================================"
-echo "PRE-FLIGHT BOOTSTRAP"
-echo "  Installing script dependencies on fresh Ubuntu 24.04..."
-echo "  curl, wget, gnupg, lsb-release, ca-certificates,"
-echo "  snapd, python3-distutils, xdg-desktop-portal-gnome"
-echo "============================================================"
-sudo apt update -qq
-sudo apt install -y \
-    net-tools \
-    openssh-server
-echo "  Pre-flight bootstrap complete"
-echo " "
 
 # ============================================================================
 # ARCHITECTURE CHECK
@@ -111,16 +89,7 @@ fi
 # ============================================================================
 # HEADER BANNER
 # ============================================================================
-echo " "
-echo "  ____  _  ____    ____  "
-echo " (  _ \(_)( ___)  ( ___)  "
-echo "  )___/ _  )__)    )__)   "
-echo " (__) (_)(____)  (____)   "
-echo "  ____  ____  ____   __   __  __  ____  ____  "
-echo " (  _ \(  _ \(  _ \ / _) /  \(  )(_  _)/ ___) "
-echo "  )   / ) _ ( ) _ (( (/\( () ))(__  )(  \___ \ "
-echo " (__\_)(____/(____/ \__/ \__/(____)(__)  (____/ "
-echo " "
+echo "Robots & Rovers"
 echo "============================================================"
 echo "  Raspberry Pi 5 Ubuntu 24.04 - STEAM Clown Run First Script"
 echo "  Revision 0.01"
@@ -154,6 +123,22 @@ select yn in "Yes" "No"; do
     esac
 done
 
+
+# ============================================================================
+# PRE-FLIGHT BOOTSTRAP
+# Install the bare minimum tools needed by this script itself BEFORE any
+# prompted steps run. These are not guaranteed on a brand new Ubuntu 24.04
+# Desktop image and are required for later steps to succeed.
+# ============================================================================
+echo " "
+echo "============================================================"
+echo "PRE-FLIGHT BOOTSTRAP"
+echo "  Installing script dependencies on fresh Ubuntu 24.04..."
+echo "apt update"
+echo "apt upgrade -y"
+echo "check on net-tools"
+echo "check on openssh-server"
+echo "============================================================"
 # ============================================================================
 # STEP 1 - UPDATE AND UPGRADE
 # Always run this first on a fresh install to pull the latest package lists
@@ -164,6 +149,8 @@ echo "============================================================"
 echo "STEP 1 - UPDATE AND UPGRADE"
 echo "  Running: sudo apt update"
 echo "  Running: sudo apt upgrade -y"
+echo "  check on net-tools"
+echo "  check on openssh-server"
 echo "============================================================"
 echo "Do you wish to run UPDATE and UPGRADE? Enter y/Y or n/N"
 read -p "Update and upgrade?: " yesInstall
@@ -187,9 +174,16 @@ if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
     echo "----------------------------------------------------"
     echo "Done: UPDATE AND UPGRADE"
     echo "----------------------------------------------------"
+    sudo apt install -y \
+    net-tools \
+    openssh-server
+    echo "  Pre-flight bootstrap complete"
+    echo " "
+    
 else
     echo "Skipping UPDATE AND UPGRADE"
 fi
+
 
 # ============================================================================
 # STEP 2 - NETWORKING TOOLS & SSh
@@ -239,13 +233,13 @@ fi
 
 
 # ============================================================================
-# STEP 13 - VERIFY ALL INSTALLS
+# STEP 4 - VERIFY ALL INSTALLS
 # Quick version check on all installed tools.
 # Flags anything that is NOT FOUND so you know what to investigate.
 # ============================================================================
 echo " "
 echo "============================================================"
-echo "STEP 13 - VERIFY ALL INSTALLS"
+echo "STEP 4 - VERIFY ALL INSTALLS"
 echo "============================================================"
 echo " "
 
