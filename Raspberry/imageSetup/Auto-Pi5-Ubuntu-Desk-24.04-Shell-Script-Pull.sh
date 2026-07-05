@@ -64,14 +64,22 @@ echo "Done running update, upgrade, autoremove, autoclean, and finally another u
 echo "----------------------------------------------------"
 echo "Copying setup shell scripts"
 echo "----------------------------------------------------"
-    sudo wget -O Pi5-Ubuntu-Desk-24.04-Run-First.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Pi5-Ubuntu-Desk-24.04-Run-First.sh 
-    sudo chmod 755 Pi5-Ubuntu-Desk-24.04-Run-First.sh
-    sudo wget -O Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh 
-    sudo chmod 755 Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh
-    sudo wget -O Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-LVR/refs/heads/main/ROS2/Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh 
-    sudo chmod 755 Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh
-    sudo wget -O Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh
-    sudo chmod 755 Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh
+sudo wget -O Auto-Pi5-Ubuntu-Desk-24.04-Run-First.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Auto-Pi5-Ubuntu-Desk-24.04-Run-First.sh
+sudo chmod 755 Auto-Pi5-Ubuntu-Desk-24.04-Run-First.sh
+#   sudo wget -O Pi5-Ubuntu-Desk-24.04-Run-First.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Pi5-Ubuntu-Desk-24.04-Run-First.sh 
+#   sudo chmod 755 Pi5-Ubuntu-Desk-24.04-Run-First.sh
+sudo wget -O Auto-Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Auto-Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh
+sudo chmod 755 Auto-Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh
+#   sudo wget -O Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh 
+#   sudo chmod 755 Pi5-Ubuntu-Desk-24.04-Tools-Apps-Install.sh
+sudo wget -O Auto-Pi5-Ubuntu-Desk-24.04-Fix-Desktop-Portal-Gnome.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Auto-Pi5-Ubuntu-Desk-24.04-Fix-Desktop-Portal-Gnome.sh
+sudo chmod 755 Auto-Pi5-Ubuntu-Desk-24.04-Fix-Desktop-Portal-Gnome.sh
+#   sudo wget -O Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh
+#   sudo chmod 755 Pi5-Ubuntu-24.04-Fix-Desktop-Portal-Gnome.sh
+
+#   sudo wget -O Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-LVR/refs/heads/main/ROS2/Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh 
+#   sudo chmod 755 Pi5-Ubuntu-24.04-ROS2-Jazzy-Install.sh
+
     
     ls *.sh
 
