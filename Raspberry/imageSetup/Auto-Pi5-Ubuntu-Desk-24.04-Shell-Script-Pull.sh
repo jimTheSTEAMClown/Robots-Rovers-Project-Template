@@ -3,7 +3,9 @@
 # Shell script to pull the bash shell scripts for Desktop on Raspberry Pi 5 Ubuntu 24.04
 # ============================================================================
 # Usage:
-# sudo wget -O Auto-Pi5-Ubuntu-Desk-24.04-Shell-Script-Pull.sh 
+# sudo wget -O Auto-Pi5-Ubuntu-Desk-24.04-Shell-Script-Pull.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Auto-Pi5-Ubuntu-Desk-24.04-Shell-Script-Pull.sh
+# sudo chmod 755 Auto-Pi5-Ubuntu-Desk-24.04-Shell-Script-Pull.sh
+# ./Auto-Pi5-Ubuntu-Desk-24.04-Shell-Script-Pull.sh
 # ============================================================================
 # Shell script to pull the bash shell scripts for Desktop on Raspberry Pi 5 Ubuntu 24.04
 # Source: STEAM Clown - www.steamclown.org
