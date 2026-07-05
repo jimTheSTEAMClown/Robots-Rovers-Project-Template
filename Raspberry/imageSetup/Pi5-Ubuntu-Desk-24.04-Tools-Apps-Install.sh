@@ -33,6 +33,12 @@
 #                  Added pre-flight bootstrap, ufw enable, snapd readiness wait,
 #                  python3-distutils, xdg-desktop-portal-gnome
 #  Revision 0.04 - Major fixes from real-world install log analysis:
+#                  (see full list in Rev 0.04 notes)
+#  Revision 0.05 - Fixed xdg-desktop-portal deadlock on Pi 5 GNOME session:
+#                  Replaced xdg-desktop-portal-gnome (deadlocks on Pi 5 ARM64)
+#                  with xdg-desktop-portal-gtk (stable, no deadlock)
+#                  Added portals.conf routing gtk for file chooser,
+#                  gnome for screencast/screenshot (future-proof if gnome fixes)
 #                  * Replaced all 'apt' with 'apt-get' (script-safe interface)
 #                  * Removed pigpio (not in Ubuntu 24.04 repos); confirmed lgpio
 #                    is installed via python3-gpiozero dependency; documented
@@ -110,7 +116,14 @@ echo " "
 #   lsb-release      - Used by Docker and VS Code repo setup for Ubuntu codename
 #   ca-certificates  - Required for HTTPS apt repo connections
 #   snapd            - Snap package manager; required for Chromium (Step 6)
-#   xdg-desktop-portal-gnome - Required by gnome-remote-desktop VNC (Step 9)
+#   xdg-desktop-portal-gtk  - Portal backend for file chooser, printing, etc.
+#                            Replaces xdg-desktop-portal-gnome which deadlocks
+#                            on Pi 5 ARM64 GNOME sessions causing terminals,
+#                            Firefox, and Chromium to hang or never open.
+#                            GTK backend is stable and covers all curriculum needs.
+#                            A portals.conf is written after install to route
+#                            file chooser calls to gtk and leave screencast/
+#                            screenshot routed to gnome (for future compatibility).
 #   flatpak          - Required for optional Arduino IDE 2.x Flatpak (Step 10)
 # ============================================================================
 echo " "
@@ -128,8 +141,35 @@ sudo apt-get install -y \
     ca-certificates \
     snapd \
     flatpak \
-    xdg-desktop-portal-gnome
+    xdg-desktop-portal-gtk
 echo "  Pre-flight bootstrap complete"
+echo " "
+
+# Write portals.conf to route file chooser to gtk backend
+# This prevents the gnome portal deadlock on Pi 5 GNOME sessions while
+# keeping gnome routed for screencast/screenshot for future compatibility
+echo "----------------------------------------------------"
+echo "  Writing ~/.config/xdg-desktop-portal/portals.conf"
+echo "  Routes file chooser to gtk backend (avoids Pi 5 deadlock)"
+echo "  Routes screencast/screenshot to gnome (future-proof)"
+echo "----------------------------------------------------"
+mkdir -p "$HOME/.config/xdg-desktop-portal"
+cat > "$HOME/.config/xdg-desktop-portal/portals.conf" << 'PORTALEOF'
+[preferred]
+# xdg-desktop-portal-gnome deadlocks on Pi 5 Ubuntu 24.04 ARM64 GNOME sessions
+# causing terminals, Firefox, and Chromium to hang. Route file chooser to gtk.
+# If gnome backend is ever fixed in a future Ubuntu update, screencast and
+# screenshot will automatically use it again via the gnome routing below.
+default=gtk
+org.freedesktop.impl.portal.FileChooser=gtk
+org.freedesktop.impl.portal.Print=gtk
+
+# Route screencast and screenshot to gnome for future compatibility
+# (gnome backend handles these better when it is working correctly)
+org.freedesktop.impl.portal.ScreenCast=gnome
+org.freedesktop.impl.portal.Screenshot=gnome
+PORTALEOF
+echo "  portals.conf written to: $HOME/.config/xdg-desktop-portal/portals.conf"
 echo " "
 
 echo "  Waiting for snapd to be ready..."
@@ -175,7 +215,7 @@ echo " (__\_)(____/(____/ \__/ \__/(____)(__)  (____/ "
 echo " "
 echo "============================================================"
 echo "  Raspberry Pi 5 Ubuntu 24.04 - STEAM Clown Setup Script"
-echo "  Revision 0.04"
+echo "  Revision 0.05"
 echo "  Target: Pi 5 / ARM64 / Ubuntu 24.04 LTS"
 echo "  For: Fire Breathing Robots / Mechatronics Curriculum"
 echo "  Log: $LOG_FILE"
@@ -916,7 +956,7 @@ if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
     echo "Installing gnome-remote-desktop"
     echo "  Enables VNC and RDP access to the Pi desktop"
     echo "  Shows the actual logged-in GNOME session to remote clients"
-    echo "  xdg-desktop-portal-gnome installed in pre-flight bootstrap"
+    echo "  xdg-desktop-portal-gtk installed in pre-flight bootstrap"
     echo "  (required for VNC sharing toggle to work in Settings)"
     echo "  Docs: https://ubuntu.com/tutorials/access-remote-desktop"
     echo "Running: sudo apt-get install gnome-remote-desktop -y"
@@ -1384,7 +1424,7 @@ echo "  )(_) )( () ))  (  )__)  "
 echo " (____/  \__/(_)\_)(____)  "
 echo " "
 echo "============================================================"
-echo "  Done: Pi 5 Ubuntu 24.04 STEAM Clown Setup - Rev 0.04"
+echo "  Done: Pi 5 Ubuntu 24.04 STEAM Clown Setup - Rev 0.05"
 echo " "
 echo "  Log file saved to:"
 echo "  $LOG_FILE"
