@@ -12,14 +12,13 @@ echo "Do you wish to update and upgrade? Enter y/Y or n/N"
 read -p "Set locale?: " yesInstall
 
 if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
-
     echo "----------------------------------------------------"
-  echo "getting home with cd ~"
-  echo "----------------------------------------------------"
-  echo " "
-  cd ~
-  pwd
-      echo "----------------------------------------------------"
+    echo "getting home with cd ~"
+    echo "----------------------------------------------------"
+    echo " "
+    cd ~
+    pwd
+    echo "----------------------------------------------------"
     echo "Running: sudo apt-get update, upgrade, autoremove, autoclean, and finally another update"
     echo "----------------------------------------------------"
     sudo apt-get update         # sync package lists from repos
@@ -27,9 +26,9 @@ if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
     sudo apt-get autoremove -y  # drop orphaned dependencies left by upgrades
     sudo apt-get autoclean      # purge stale .deb cache files
     sudo apt-get update         # re-sync so next install has clean fresh index
-  echo "----------------------------------------------------"
-  echo "Done running update, upgrade, autoremove, autoclean, and finally another update"
-  echo "----------------------------------------------------"
+    echo "----------------------------------------------------"
+    echo "Done running update, upgrade, autoremove, autoclean, and finally another update"
+    echo "----------------------------------------------------"
 else
     echo "Skipping locale setup"
 fi
