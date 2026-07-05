@@ -64,8 +64,27 @@ else
     echo "Skipping locale setup"
 fi
 
-echo "Rebooting in 7 seconds to reset xdg-desktop-portal..."
-echo "Press Ctrl+C to cancel"
-sleep 7
-sudo reboot
+# ============================================================================
+# STEP 5 - Auto reboot/restart
+# ============================================================================
+echo "============================================================"
+echo "  About to restart"
+echo "============================================================"
+echo "Do you wish to run sudo reboot? Enter y/Y or n/N"
+read -p "sudo reboot?: " yesInstall
+
+if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
+    echo "Rebooting in 7 seconds to reset xdg-desktop-portal..."
+    echo "Press Ctrl+C to cancel"
+    sleep 7
+    sudo reboot
+        
+else
+    echo "============================================================"
+    echo "Skipping reboot"
+    echo "You should reboot soon"
+    echo "============================================================"
+fi
+
+echo "Done"
 
