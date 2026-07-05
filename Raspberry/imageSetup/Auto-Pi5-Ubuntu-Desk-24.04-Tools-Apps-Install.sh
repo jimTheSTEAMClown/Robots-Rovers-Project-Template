@@ -134,6 +134,7 @@ echo "STEP 1 - UPDATE, UPGRADE, AND AUTOREMOVE"
 echo "  Running: sudo apt-get update"
 echo "  Running: sudo apt-get upgrade -y"
 echo "  Running: sudo apt-get autoremove -y"
+echo "  Running: sudo apt-get autoclean"
 echo "============================================================"
   sudo apt-get update         # sync package lists from repos
   sudo apt-get upgrade -y     # apply all available upgrades
@@ -1224,6 +1225,37 @@ groups "$USER"
 echo " "
 echo "--- Disk Usage Summary ---"
 df -h / | tail -1 | awk '{print "  Root filesystem: " $3 " used of " $2 " (" $5 " full)"}'
+
+echo "  Running: sudo apt-get update"
+echo "  Running: sudo apt-get upgrade -y"
+echo "  Running: sudo apt-get autoremove -y"
+echo "  Running: sudo apt-get autoclean"
+echo "============================================================"
+  sudo apt-get update         # sync package lists from repos
+  sudo apt-get upgrade -y     # apply all available upgrades
+  sudo apt-get autoremove -y  # drop orphaned dependencies left by upgrades
+  sudo apt-get autoclean      # purge stale .deb cache files
+  sudo apt-get update         # re-sync so next install has clean fresh index
+
+echo "----------------------------------------------------"
+echo "Running purge of xdg-desktop-portal-gnome"
+echo "----------------------------------------------------"
+    sudo apt purge xdg-desktop-portal-gnome
+echo "----------------------------------------------------"
+echo "Installing xdg-desktop-portal-gtk"
+echo "----------------------------------------------------"    
+    sudo apt install xdg-desktop-portal-gtk
+echo "----------------------------------------------------"
+echo "Restarting daemon-reexec and restart xdg-desktop-portal"
+echo "----------------------------------------------------"        
+    systemctl --user daemon-reexec
+    systemctl --user restart xdg-desktop-portal
+
+    echo " "
+    echo "----------------------------------------------------"
+    echo "Done: fixing Gnome"
+    echo "----------------------------------------------------"
+
 
 # ============================================================================
 # DONE BANNER
