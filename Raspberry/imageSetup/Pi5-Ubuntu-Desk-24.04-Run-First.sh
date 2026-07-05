@@ -19,17 +19,14 @@
 #                        Must have internet access
 #
 # Revision:
-#  Revision 0.01 - Initial Pi 5 STEAM Clown robotics setup
+#  Revision 0.02 - Initial Pi 5 STEAM Clown robotics setup
 #  
 # Steps:
 #  STEP  1 - Update and Upgrade
 #  STEP  2 - sudo apt install net-tools -y
 #  STEP  3 - sudo apt install openssh-server -y
 #  STEP  4 - make sure ssh is running
-#  STEP  5 - 
-#  STEP  6 - 
-#  STEP  7 - 
-
+#  STEP  5 - Auto reset/restart
 #
 # Usage:
 #   chmod +x Pi5-Ubuntu-24.04-Run-First.sh
@@ -144,13 +141,8 @@ echo "============================================================"
 # Always run this first on a fresh install to pull the latest package lists
 # and apply all security patches before installing anything else.
 # ============================================================================
-echo " "
-echo "============================================================"
-echo "STEP 1 - UPDATE AND UPGRADE"
 echo "  Running: sudo apt update"
 echo "  Running: sudo apt upgrade -y"
-echo "  check on net-tools"
-echo "  check on openssh-server"
 echo "============================================================"
 echo "Do you wish to run UPDATE and UPGRADE? Enter y/Y or n/N"
 read -p "Update and upgrade?: " yesInstall
@@ -160,26 +152,17 @@ if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
     cd ~
     pwd
     echo "----------------------------------------------------"
-    echo "Running: sudo apt update"
+    echo "Running: sudo apt-get update, upgrade, autoremove, autoclean, and finally another update"
     echo "----------------------------------------------------"
-    sudo apt update
-
-    echo " "
+    sudo apt-get update         # sync package lists from repos
+    sudo apt-get upgrade -y     # apply all available upgrades
+    sudo apt-get autoremove -y  # drop orphaned dependencies left by upgrades
+    sudo apt-get autoclean      # purge stale .deb cache files
+    sudo apt-get update         # re-sync so next install has clean fresh index
     echo "----------------------------------------------------"
-    echo "Running: sudo apt upgrade -y"
+    echo "Done running update, upgrade, autoremove, autoclean, and finally another update"
     echo "----------------------------------------------------"
-    sudo apt upgrade -y
-
-    echo " "
-    echo "----------------------------------------------------"
-    echo "Done: UPDATE AND UPGRADE"
-    echo "----------------------------------------------------"
-    sudo apt install -y \
-    net-tools \
-    openssh-server
-    echo "  Pre-flight bootstrap complete"
-    echo " "
-    
+        
 else
     echo "Skipping UPDATE AND UPGRADE"
 fi
@@ -230,10 +213,8 @@ else
     echo "Skipping core tools install"
 fi
 
-
-
 # ============================================================================
-# STEP 4 - VERIFY ALL INSTALLS
+# STEP 3 - VERIFY ALL INSTALLS
 # Quick version check on all installed tools.
 # Flags anything that is NOT FOUND so you know what to investigate.
 # ============================================================================
@@ -275,14 +256,34 @@ echo "  )(_) )( () ))  (  )__)  "
 echo " (____/  \__/(_)\_)(____)  "
 echo " "
 echo "============================================================"
-echo "  Done: Pi 5 Ubuntu 24.04 STEAM Clown Run First - Rev 0.01"
+echo "  Done: Pi 5 Ubuntu 24.04 STEAM Clown Run First - Rev 0.02"
 echo " "
 echo "  Log file saved to:"
 echo "  $LOG_FILE"
 echo " "
-echo "  REQUIRED MANUAL STEPS AFTER REBOOT:"
-echo "  1. LOG OUT AND BACK IN"
-echo " "
-echo "  2. Run the Pi5-Tools script"
-echo "  
+
+# ============================================================================
+# STEP 5 - Auto reboot/restart
+# ============================================================================
 echo "============================================================"
+echo "  About to restart"
+echo "============================================================"
+echo "Do you wish to run sudo reboot? Enter y/Y or n/N"
+read -p "sudo reboot?: " yesInstall
+
+if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
+    echo "Rebooting in 7 seconds to reset xdg-desktop-portal..."
+    echo "Press Ctrl+C to cancel"
+    sleep 7
+    sudo reboot
+        
+else
+    echo "============================================================"
+    echo "Skipping reboot"
+    echo "You should reboot soon"
+    echo "============================================================"
+fi
+
+echo "Done"
+
+
