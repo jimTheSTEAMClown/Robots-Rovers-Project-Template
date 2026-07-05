@@ -3,7 +3,7 @@
 # Shell script to run first before installing apps on a Raspberry Pi 5 Ubuntu 24.04
 # ============================================================================
 # Usage:
-# sudo wget -O Auto-Pi5-Ubuntu-Desk-24.04-Run-First.sh 
+# sudo wget -O Auto-Pi5-Ubuntu-Desk-24.04-Run-First.sh https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/Raspberry/imageSetup/Auto-Pi5-Ubuntu-Desk-24.04-Run-First.sh
 # sudo chmod 755 Auto-Pi5-Ubuntu-Desk-24.04-Run-First.sh
 # ./Auto-Pi5-Ubuntu-Desk-24.04-Run-First.sh
 # ============================================================================
