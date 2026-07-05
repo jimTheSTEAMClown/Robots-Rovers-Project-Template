@@ -19,23 +19,16 @@ if [ "$yesInstall" == "y" ] || [ "$yesInstall" == "Y" ]; then
   echo " "
   cd ~
   pwd
+      echo "----------------------------------------------------"
+    echo "Running: sudo apt-get update, upgrade, autoremove, autoclean, and finally another update"
+    echo "----------------------------------------------------"
+    sudo apt-get update         # sync package lists from repos
+    sudo apt-get upgrade -y     # apply all available upgrades
+    sudo apt-get autoremove -y  # drop orphaned dependencies left by upgrades
+    sudo apt-get autoclean      # purge stale .deb cache files
+    sudo apt-get update         # re-sync so next install has clean fresh index
   echo "----------------------------------------------------"
-  echo "Running $ update"
-  echo "----------------------------------------------------"
-  echo " "
-  sudo apt update
-  echo " "
-  echo "----------------------------------------------------"
-  echo "Done running Update"
-  echo "----------------------------------------------------"
-  echo "----------------------------------------------------"
-  echo "Running $ upgrade with -y"
-  echo "----------------------------------------------------"
-  echo " "
-  sudo apt upgrade -y
-  echo " "
-  echo "----------------------------------------------------"
-  echo "Done running Upgrade"
+  echo "Done running update, upgrade, autoremove, autoclean, and finally another update"
   echo "----------------------------------------------------"
 else
     echo "Skipping locale setup"
