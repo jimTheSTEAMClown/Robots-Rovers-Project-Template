@@ -1,15 +1,9 @@
 #!/bin/bash
 # ROS2 Jazzy Install Bash.sh
 # https://docs.ros.org/en/jazzy/Installation/Alternatives/Ubuntu-Development-Setup.html
-
-read -s -p "About to run apt update and upgrade -y - Press Enter to continue..."
-sudo apt update
-sudo apt upgrade -y
-
-read -s -p "Checking locale settings - Press Enter to continue..."
+read -s -p "checking UTF and updating - Press Enter to continue..."
 locale  # check for UTF-8
 
-read -s -p "setting locale settings, which are probably already set - Press Enter to continue..."
 sudo apt update
 sudo apt install locales
 sudo locale-gen en_US en_US.UTF-8
@@ -52,6 +46,17 @@ sudo apt update && sudo apt install -y \
   python3-pytest-timeout \
   ros-dev-tools
 
+# Install development tools (optional)
+# If you are going to build ROS packages or otherwise do development, you can also install the development tools:
+# Check /etc/apt/sources.list.d/ubuntu.sources and ensure the Suites: line includes noble-updates and noble-backports:
+read -s -p "Checking Sources for ROS2 - Press Enter to continue..."
+grep Suites /etc/apt/sources.list.d/ubuntu.sources
+
+# If noble-updates or noble-backports are missing then edit the file and update the line to:
+# Suites: noble noble-updates noble-backports
+# Then run:
+
+# sudo apt clean && sudo apt update && sudo apt full-upgrade -y
 
 # Build ROS 2 - Get ROS 2 code - Create a workspace and clone all repos:
 read -s -p "Build ROS 2 - Jazzy - Press Enter to continue..."
