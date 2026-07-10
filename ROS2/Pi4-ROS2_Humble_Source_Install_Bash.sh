@@ -54,6 +54,51 @@
 # ============================================================================
 
 # ============================================================================
+# LOGGING SETUP
+# ============================================================================
+LOG_FILE="$HOME/log-Pi4-Humble-Source-Install-$(date +%Y%m%d-%H%M%S).log"
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+echo "============================================================"
+echo "  LOGGING ENABLED"
+echo "  Log file: $LOG_FILE"
+echo "  All terminal output is being saved to that file."
+echo "============================================================"
+echo " "
+
+# ============================================================================
+# ARCHITECTURE AND VERSION CHECK
+# ============================================================================
+ARCH=$(uname -m)
+UBUNTU_VER=$(lsb_release -rs 2>/dev/null || echo "unknown")
+
+echo "Detected architecture: $ARCH"
+echo "Detected Ubuntu version: $UBUNTU_VER"
+
+if [ "$ARCH" != "aarch64" ]; then
+    echo "WARNING: This script targets ARM64 (aarch64). Detected: $ARCH"
+    echo "Do you wish to continue anyway?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) break;;
+            No  ) echo "Exiting."; exit 1;;
+        esac
+    done
+fi
+
+if [[ "$UBUNTU_VER" != 22.* ]]; then
+    echo "WARNING: This script targets Ubuntu 22.04.x. Detected: $UBUNTU_VER"
+    echo "Do you wish to continue anyway?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) break;;
+            No  ) echo "Exiting."; exit 1;;
+        esac
+    done
+fi
+
+
+# ============================================================================
 # STEP 1 - CHECK AND SET UTF-8 LOCALE
 # ROS 2 requires a UTF-8 locale. Verify and set if needed.
 # ============================================================================
