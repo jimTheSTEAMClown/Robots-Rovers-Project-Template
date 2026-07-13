@@ -10,14 +10,33 @@
 │   └── styles.css
 ├── /js
 │   └── app.js
-├── /assets
-│   ├── images/
-│   ├── videos/
-│   └── icons/
+├── /images/
+├── /media/ (videos and other media assets, including non site specific images)
+├── /icons/
+├── /fonts
+├── /projects
+│   ├── /subproject1/
+│   │   └── images
+│   ├── /subproject2/
+│       └── images
 └── /components (optional)
 ```
+## 2. Mechatronics Engineering Class Specific Directory structures
+```
+/project-root
+│
+├── index.html
+├── /images/
+└── /mechatronics
+    ├── /unit-1/
+    │   └── images
+    ├── /unit-2/
+        └── images
+    ├── /unit-n/
+        └── images
 
----
+```
+/projects , /unit-1 , will have a /images sub directory, and all image links will be relative to the sub directory, unless specificly pointing to the root/image directory.  There should not be image link generated to other locations.  
 
 # 🧠 Core Coding Principles
 
