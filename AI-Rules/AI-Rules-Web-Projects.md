@@ -36,7 +36,7 @@
         └── images
 
 ```
-/projects , /unit-1 , will have a /images sub directory, and all image links will be relative to the sub directory, unless specificly pointing to the root/image directory.  There should not be image link generated to other locations.  
+/projects , /unit-1 , will have an /images sub directory, and all image links will be relative to the sub images directory, unless specificly pointing to the root/image directory.  There should not be image link generated to other locations.  
 
 # 🧠 Core Coding Principles
 
