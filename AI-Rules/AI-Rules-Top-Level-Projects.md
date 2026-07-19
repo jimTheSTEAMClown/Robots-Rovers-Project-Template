@@ -1,21 +1,30 @@
 # AI Vibe Coding Over Arching Rules For The Project<BR>(Over Arching Rules)
-🤖 Rover AI Vibe Coding Rules (Python)
 
-Jim The STEAM Clown Edition — Updated and expanded from the original draft
-to align with the Raspberry Pi Rover Architecture Guide.
-Changes from the original are marked: ✏️ updated · ➕ added · ✅ unchanged
-
+Jim The STEAM Clown Edition of Rules 
 Note: Review and refine.
 write all results as a proper .md reference document, plus give a clean visual summary that is also md, and cut and pastable into tools like Google docs & Slide, as well as compatable with Github md documents.
 
-🧭 1. Core Design Philosophy ✅
+## Architectural Guidance
 
-Prioritize readability over cleverness
-Code must be teachable to high school / early college students
-Favor modular, testable components over monolithic scripts
-Every file should have a clear single responsibility
-Every abstract concept should be grounded in a real-world analogy when explained
+### 1.1 
 
+- Answer as if you were the lead software architect designing this project from scratch.
+- Don't just answer my immediate question
+- Don't be conservative. Tell me what you would build.
+- Recommend the architecture you'd build if you expected this project to grow for the next 10 years.
+
+
+### 1.1 Core Design Philosophy
+
+- Prioritize readability over cleverness
+- Code & examples must be teachable to high school / early college students
+- Favor modular, testable components over monolithic text or scripts
+- Every file should have a clear single responsibility
+- Every abstract concept should be grounded in a real-world analogy when explained
+
+architectural guidance
+
+---
 
 🧱 2. Library & Hardware Rules ✏️
 Primary GPIO library: gpiozero
