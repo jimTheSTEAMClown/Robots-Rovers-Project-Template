@@ -1,8 +1,8 @@
 # AI Vibe Coding Over Arching Rules For Project<BR>(Over Arching Rules)
 
 Jim The STEAM Clown Edition of Rules 
+
 Note: Review and refine.
-write all results as a proper .md reference document, plus give a clean visual summary that is also md, and cut and pastable into tools like Google docs & Slide, as well as compatable with Github md documents.
 
 ## Architectural Guidance
 
