@@ -94,7 +94,7 @@
 
 ---
 
-## 7. Directory Trees
+## 7.1 Directory Trees With Code Fences
 
 - Render directory trees inside a labeled `text` code fence — never as bare Markdown lists or with raw link formatting.
 
@@ -105,9 +105,7 @@
   └── README.md
   ```
 
-- Use proper tree characters: `├──`, `└──`, `│`. Do not use `-` or `*` as tree branches.
-
-## 7.1 Directory Tree Format
+## 7.2 Directory Tree Format
 
 Always use Unicode Tree or Box-Drawing Tree style for all directory examples
 - Use proper tree characters: `├──`, `└──`, `│`. Do not use `-` or `*` as tree branches.
