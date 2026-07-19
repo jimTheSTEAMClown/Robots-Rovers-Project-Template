@@ -107,6 +107,11 @@
 
 - Use proper tree characters: `├──`, `└──`, `│`. Do not use `-` or `*` as tree branches.
 
+## 7.1 Directory Tree Format
+
+Always use Unicode Tree or Box-Drawing Tree style for all directory examples
+- Use proper tree characters: `├──`, `└──`, `│`. Do not use `-` or `*` as tree branches.
+
 ---
 
 ## 8. Inclusive Terminology (Serial Protocols)
