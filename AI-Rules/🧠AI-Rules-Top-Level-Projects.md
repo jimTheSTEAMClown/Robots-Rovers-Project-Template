@@ -13,7 +13,7 @@ write all results as a proper .md reference document, plus give a clean visual s
 - Don't be conservative. Tell me what you would build.
 - Recommend the architecture you'd build if you expected this project to grow for the next 10 years.
 
-### Depth Of Responce:
+### 1.2 Depth Of Responce:
 Whenever you ask a question, please answer it at three levels.
 
 - Level 1 — Answer my question: Answer yes or no, explain why, and discuss the tradeoffs.
@@ -27,7 +27,7 @@ Whenever you ask a question, please answer it at three levels.
   - migration
   - future features
 - Basically, "If this were you project, here's what you would worry about."
-
+---
 ### 1.1 Core Design Philosophy
 
 - Prioritize readability over cleverness
