@@ -96,7 +96,7 @@ Default to the smallest targeted diff that fulfills the request. Do not rewrite 
 - Did I stay inside the requested scope (see Section 3)?
 - Are assumptions stated?
 
-## 9. Language-Specific Rules
+## 9. Language & Hardware Specific Rules
 
 This file governs architecture, philosophy, naming, and AI behavior across all projects. For syntax, idioms, formatting, and toolchain-specific conventions, see:
 
