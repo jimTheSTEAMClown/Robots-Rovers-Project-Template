@@ -39,6 +39,10 @@ Whenever you ask a question, please answer it at three levels.
 
 ## Read & Apply The Folloing Rules For Specific Types Of Software or Hardware Projects:
 
+- At the beginning of a new chat, report all the rules you are following.
+- Honor any hierarchical application of rules and report when a rule is overloaded by another rule.
+- Report any Rule conflicts & ask for a user directed resolution.  Don't guess.
+
 ### Documentation and Communication Rules
 
 For all projects, apply thses Documentation and Communication Rules
