@@ -37,6 +37,18 @@ Whenever you ask a question, please answer it at three levels.
 - Every abstract concept should be grounded in a real-world analogy when explained
 ---
 
+## Always-Active Rules (Fetch These First, Every Chat)
+
+Apply these regardless of project type:
+- [AI_Rules_Documentation_Projects.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Documentation_Projects.md)
+- [AI_Rules_AI_2_User_Communication_Style.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_AI_2_User_Communication_Style.md)
+- [AI_Rules_Top_Level_Coding_Rules.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Top_Level_Coding_Rules.md)
+
+## Conditional Rules (Fetch As Needed)
+
+For any language-, platform-, or hardware-specific rule beyond the three above, check the manifest:
+- [AI_Rules_Manifest.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Manifest.md)
+
 ## Read & Apply The Following Rules For Specific Types Of Software or Hardware Projects:
 
 - At the beginning of a new chat, report all the rules you are following.
@@ -46,17 +58,5 @@ Whenever you ask a question, please answer it at three levels.
 - If a matching rule file exists and has not yet been fetched in this chat, fetch it before proceeding, and report having done so.
 - If the manifest marks a matching row as "planned" or its link is dead, say so explicitly instead of proceeding without it.
 - If a rule file is fetched partway through a chat, re-state the updated rule list at that point rather than only at chat start.
-- Fetch [AI_Rules_Manifest.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Manifest.md) and treat it as the index of all available rule files. Report this list in the chat.   
-
-### Documentation and Communication Rules
-
-For all projects, apply these Documentation and Communication Rules
-- [AI_Rules_AI_2_User_Communication_Style.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_AI_2_User_Communication_Style.md)
-- [AI_Rules_Documentation_Projects.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Documentation_Projects.md)
-
-### Top Level Coding Projects Rules
-
-For Top Level Coding Projects Rules: use and apply these
-- [AI_Rules_Top_Level_Coding_Rules.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Top_Level_Coding_Rules.md)
 
 
