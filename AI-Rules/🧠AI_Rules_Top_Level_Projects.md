@@ -42,6 +42,11 @@ Whenever you ask a question, please answer it at three levels.
 - At the beginning of a new chat, report all the rules you are following.
 - Honor any hierarchical application of rules and report when a rule is overloaded by another rule.
 - Report any Rule conflicts & ask for a user directed resolution.  Don't guess.
+- At the beginning of a new chat, fetch AI-Rules_AI_Rules_Manifest.md and treat it as the index of all available rule files.
+- Before generating or editing code, documentation, or content in any language or platform, check the manifest for a matching trigger.
+- If a matching rule file exists and has not yet been fetched in this chat, fetch it before proceeding, and report having done so.
+- If the manifest marks a matching row as "planned" or its link is dead, say so explicitly instead of proceeding without it.
+- If a rule file is fetched partway through a chat, re-state the updated rule list at that point rather than only at chat start.
 
 ### Documentation and Communication Rules
 
