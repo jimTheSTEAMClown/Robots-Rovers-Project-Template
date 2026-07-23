@@ -33,9 +33,11 @@ Always document this choice with a comment in the driver file.
 
 Assume the project always contains:
 
+```text
 /hal
     __init__.py
     pin_config.py
+```
 
 The generated script should ALWAYS import hardware pin definitions directly using:
 
