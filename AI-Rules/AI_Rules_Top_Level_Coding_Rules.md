@@ -102,7 +102,7 @@ This file governs architecture, philosophy, naming, and AI behavior across all p
 
 ### Language Specific Rules
 
-- `AI_Coding_Python_Rules.md`
+- `[AI_Coding_Python_Rules.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Python_Language_Projects.md)`
 - `AI_Coding_PHP_Rules.md`
 - `AI_Coding_Java_Rules.md`
 
