@@ -37,7 +37,7 @@ Whenever you ask a question, please answer it at three levels.
 - Every abstract concept should be grounded in a real-world analogy when explained
 ---
 
-## - Read & Apply The Folloing Rules For Specific Types Of Projects:
+## Read & Apply The Folloing Rules For Specific Types Of Software or Hardware Projects:
 
 ### Documentation and Communication Rules
 
