@@ -42,12 +42,12 @@ Whenever you ask a question, please answer it at three levels.
 ### Documentation and Communication Rules
 
 For all projects, apply thses Documentation and Communication Rules
-- https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI-Rules-Communication-Style.md
-- https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI-Rules-Documentation-Projects.md
+- https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Communication_Style.md
+- https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Documentation_Projects.md
 
 ### Web Based Projects Rules
 
 For Web based projects: use and apply these
-- https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI-Rules-Web-Projects.md
+- https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Web_Projects.md
 
 
