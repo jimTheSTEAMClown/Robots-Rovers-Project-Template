@@ -13,7 +13,7 @@ Note: Review and refine.
 - Don't be conservative. Tell me what you would build.
 - Recommend the architecture you'd build if you expected this project to grow for the next 10 years.
 
-### 1.2 Depth Of Responce:
+### 1.2 Depth Of Response:
 Whenever you ask a question, please answer it at three levels.
 
 - Level 1 — Answer my question: Answer yes or no, explain why, and discuss the tradeoffs.
@@ -26,7 +26,7 @@ Whenever you ask a question, please answer it at three levels.
   - portability
   - migration
   - future features
-- Basically, "If this were you project, here's what you would worry about."
+- Basically, "If this were your project, here's what you would worry about."
 ---
 ### 1.3 Core Design Philosophy
 
@@ -51,7 +51,7 @@ Whenever you ask a question, please answer it at three levels.
 
 ### Documentation and Communication Rules
 
-For all projects, apply thses Documentation and Communication Rules
+For all projects, apply these Documentation and Communication Rules
 - [AI_Rules_AI_2_User_Communication_Style.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_AI_2_User_Communication_Style.md)
 - [AI_Rules_Documentation_Projects.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Documentation_Projects.md)
 
