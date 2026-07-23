@@ -4,7 +4,7 @@ Jim The STEAM Clown Edition of Rules
 
 Note: Review and refine.
 
-## Architectural Guidance
+## AI Vibe Coding Over Arching Rules - Architectural Guidance 
 
 ### 1.1 Be A Lead Project Architect 
 
