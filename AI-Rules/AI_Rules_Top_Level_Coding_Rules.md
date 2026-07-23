@@ -98,7 +98,10 @@ Default to the smallest targeted diff that fulfills the request. Do not rewrite 
 
 ## 9. Language, Platform & Hardware Specific Rules
 
-This file governs architecture, philosophy, naming, and AI behavior across all projects. For syntax, idioms, formatting, and toolchain-specific conventions, see:
+These files governs architecture, philosophy, naming, and AI behavior across all projects. For syntax, idioms, formatting, and toolchain-specific conventions.
+- Report, at the beginning of a new chat, any coding language, platform or Hardware Rules specified with live links below
+- Honor any hierarchical application of rules and report when a rule is overloaded by another rule
+- Report any Rule conflicts & ask for a user directed resolution. Don't guess
 
 ### Language Specific Rules
 
