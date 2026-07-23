@@ -1,4 +1,4 @@
-# AI Vibe Coding Over Arching Rules For Project\
+# AI Vibe Coding Over Arching Rules For Project \
 (Over Arching Rules)
 
 Jim The STEAM Clown Edition of Rules 
