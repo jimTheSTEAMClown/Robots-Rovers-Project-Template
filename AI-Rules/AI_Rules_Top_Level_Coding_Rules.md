@@ -99,7 +99,7 @@ Default to the smallest targeted diff that fulfills the request. Do not rewrite 
 ## 9. Language, Platform & Hardware Specific Rules
 
 These files governs architecture, philosophy, naming, and AI behavior across all projects. For syntax, idioms, formatting, and toolchain-specific conventions.
-- Report, in the chat, when a new rule file is applied from the AI_Rules_Manifest.md file
+- Report, in the chat, when a rule file is applied from the [AI_Rules_Manifest.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Manifest.md) file
 - Honor any hierarchical application of rules and report when a rule is overloaded by another rule
 - Report any Rule conflicts & ask for a user directed resolution. Don't guess
 
