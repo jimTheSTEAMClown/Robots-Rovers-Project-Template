@@ -96,7 +96,7 @@ Default to the smallest targeted diff that fulfills the request. Do not rewrite 
 - Did I stay inside the requested scope (see Section 3)?
 - Are assumptions stated?
 
-## 9. Language & Hardware Specific Rules
+## 9. Language, Platform & Hardware Specific Rules
 
 This file governs architecture, philosophy, naming, and AI behavior across all projects. For syntax, idioms, formatting, and toolchain-specific conventions, see:
 
@@ -104,8 +104,16 @@ This file governs architecture, philosophy, naming, and AI behavior across all p
 
 - [AI_Coding_Python_Rules.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Python_Language_Projects.md)
 - `AI_Coding_PHP_Rules.md`
+- `AI_Coding_C-PlusPlus_Rules.md`
 - `AI_Coding_Java_Rules.md`
 
+### Web Project Specific Rules
+
+- [AI-Rules/AI_Rules_Web_Projects.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Web_Projects.md)
+- `AI_Coding_PHP_Rules.md`
+- `AI_Coding_CSS_Rules.md`
+- `AI_Coding_JavaScript_Rules.md`
+ 
 ### Hardware Specific Rules
 
 - `AI_Coding_Embedded_Robotics_Rules.md` (hardware abstraction, GPIO/serial/bus rules — applies across languages when the target has physical hardware)
