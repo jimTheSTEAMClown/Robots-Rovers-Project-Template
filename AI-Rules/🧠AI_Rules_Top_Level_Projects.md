@@ -47,7 +47,7 @@ For all projects, apply thses Documentation and Communication Rules
 
 ### Top Level Coding Projects Rules
 
-For Web based projects: use and apply these
+For Top Level Coding Projects Rules: use and apply these
 - [AI_Rules_Top_Level_Coding_Rules.md](https://raw.githubusercontent.com/jimTheSTEAMClown/Robots-Rovers-Project-Template/refs/heads/main/AI-Rules/AI_Rules_Top_Level_Coding_Rules.md)
 
 
