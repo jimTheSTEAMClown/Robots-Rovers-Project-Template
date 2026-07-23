@@ -100,12 +100,20 @@ Default to the smallest targeted diff that fulfills the request. Do not rewrite 
 
 This file governs architecture, philosophy, naming, and AI behavior across all projects. For syntax, idioms, formatting, and toolchain-specific conventions, see:
 
+### Language Specific Rules
+
 - `AI_Coding_Python_Rules.md`
 - `AI_Coding_PHP_Rules.md`
 - `AI_Coding_Java_Rules.md`
+
+### Hardware Specific Rules
+
 - `AI_Coding_Embedded_Robotics_Rules.md` (hardware abstraction, GPIO/serial/bus rules — applies across languages when the target has physical hardware)
+
+### Hardware Device/Platform Specific Rules
+
 - `AI_Coding_RaspberryPi_Rules.md` (planned)
-- (additional language/platform files as added)
+- `AI_Coding_Arduino_Rules.md` (planned)
 
 Where a language- or platform-specific file conflicts with this document, the more specific file wins for its scope.
 
