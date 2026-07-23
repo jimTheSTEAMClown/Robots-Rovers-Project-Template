@@ -37,7 +37,7 @@ Whenever you ask a question, please answer it at three levels.
 - Every abstract concept should be grounded in a real-world analogy when explained
 ---
 
-## Read & Apply The Folloing Rules For Specific Types Of Software or Hardware Projects:
+## Read & Apply The Following Rules For Specific Types Of Software or Hardware Projects:
 
 - At the beginning of a new chat, report all the rules you are following.
 - Honor any hierarchical application of rules and report when a rule is overloaded by another rule.
