@@ -25,17 +25,17 @@
 
 ---
 
-## 2.1 Heading Emojis
+### 2.1 Punctuation Style
 
 - Don't use em dash (—)
 - Keep sentences in natural language, and use standard punctuation, with commas and periods where appropriate.
 
 ---
 
-## 2.2 Heading Emojis
+### 2.2 Heading Emojis
 
 - In general don't use Emojis in headings
-- Ok are "green check mark" and "red X" when highlighting right and wrong options 
+- Ok are "green check mark" and "red X" when highlighting right and wrong options
 
 ---
 
