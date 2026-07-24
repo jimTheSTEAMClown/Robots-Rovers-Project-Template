@@ -25,14 +25,10 @@
 - Never skip heading levels (e.g., don't jump from `##` to `####`).
 - No duplicate H1s. If a section was promoted to H1 during editing, demote it back to `##`.
 
----
-
 ### 2.2 Punctuation Style
 
 - Don't use em dash (—)
 - Keep sentences in natural language, and use standard punctuation, with commas and periods where appropriate.
-
----
 
 ### 2.3 Heading Emojis
 
