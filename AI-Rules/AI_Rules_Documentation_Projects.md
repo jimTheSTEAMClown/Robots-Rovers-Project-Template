@@ -16,7 +16,7 @@
 
 ---
 
-## 2. Heading
+## 2. Headings
 
 ### 2.1 Heading Hierarchy
 
