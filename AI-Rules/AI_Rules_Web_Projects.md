@@ -3,7 +3,7 @@
 ## Project Structure
 ### 1. When building a project, use these direcotory structure
 ```
-/project-root
+/project_root
 │
 ├── index.html
 ├── /css
@@ -28,15 +28,15 @@
 ├── index.html
 ├── /images/
 └── /mechatronics
-    ├── /unit-1/
+    ├── /unit_1/
     │   └── images
-    ├── /unit-2/
+    ├── /unit_2/
         └── images
-    ├── /unit-n/
+    ├── /unit_n/
         └── images
 
 ```
-/projects , /unit-1 , will have an /images sub directory, and all image links will be relative to the sub images directory, unless specificly pointing to the root/image directory.  There should not be image link generated to other locations.  
+/projects , /unit_1 , will have an /images sub directory, and all image links will be relative to the sub images directory, unless specificly pointing to the root/image directory.  There should not be image link generated to other locations.  
 
 ## Core Coding Principles
 
