@@ -77,7 +77,7 @@ echo " "
 echo "----------------------------------------------------"
 echo "Current metadata (before clean):"
 echo "----------------------------------------------------"
-exiftool "$IMAGE_FILE"
+exiftool -G1 -a -s -U -api RequestAll=3 "$IMAGE_FILE"
 echo " "
 
 echo "----------------------------------------------------"
@@ -106,7 +106,8 @@ done
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 echo "[$TIMESTAMP] Running exiftool clean on $IMAGE_FILE"
 
-exiftool -all= \
+exiftool exiftool -charset ARGS=UTF8 \
+    -all= \
     -tagsFromFile @ \
     -Artist \
     -DateTimeOriginal \
@@ -127,7 +128,7 @@ if [ $? -eq 0 ]; then
     echo "----------------------------------------------------"
     echo "Remaining metadata (after clean):"
     echo "----------------------------------------------------"
-    exiftool "$IMAGE_FILE"
+    exiftool -G1 -a -s -U -api RequestAll=3 "$IMAGE_FILE"
     echo " "
     echo "============================================"
     echo "  ____   ___  _   _ _____ "
