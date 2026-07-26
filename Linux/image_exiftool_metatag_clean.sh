@@ -1,5 +1,5 @@
 #! /bin/bash
-# ============================================================================
+# = ===========================================================================
 # shell script to strip unwanted EXIF/GPS/device metadata from an image and
 # write clean, web-safe copyright/rights tags in a single pass
 # Source: STEAM Clown - www.steamclown.org
