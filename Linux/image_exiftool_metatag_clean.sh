@@ -24,37 +24,24 @@
 #    ColorSpace, and full ICC color profile
 #  - Writes Copyright and XMP-dc:Rights (CC BY-SA 4.0) in the same pass
 #  Revision 0.02 - Updated 07/25/2026
-#  - EXIF:Copyright is ASCII-only per spec, so "(c)" is used there to
+#  - EXIF:Copyright is ASCII-only per spec, so "(C)" is used there to
 #    avoid the "©" glyph getting corrupted across encodings
-#  - Real "©" symbol is now written to XMP:Copyright instead (XMP is
-#    UTF-8, so it displays correctly there)
 #  Revision 0.03 - Updated 07/25/2026
-#  - © symbol for XMP:Copyright is now built from raw UTF-8 bytes
-#    (0xC2 0xA9) via printf, instead of a literal © character in the
-#    script, since Windows Git Bash / non-UTF-8 console codepages were
-#    corrupting the literal character into "?" before exiftool saw it
-#  Revision 0.04 - Updated 07/25/2026
-#  - Added "-charset UTF8" so ExifTool treats command-line argument
-#    bytes as UTF-8 instead of reinterpreting them via the system
-#    codepage, which was still corrupting the © symbol on write even
-#    after it was built from raw bytes ("-charset ARGS=UTF8" is not a
-#    valid type in ExifTool 13.59 - plain "-charset UTF8" is correct)
-#  Revision 0.05 - Updated 07/25/2026
 #  - Removed "-api RequestAll=3" from the before/after audit commands.
 #    It was surfacing computed/virtual tags that aren't stored in the
 #    file (e.g. [System]FilePath, [ExifTool]NewGUID/NewUUID, the latter
 #    regenerated randomly on every run) alongside real embedded tags,
 #    which made the audit output confusing. "-G1 -a -s -U" alone still
 #    shows every real tag including duplicates, just without the noise.
-#  Revision 0.06 - Updated 07/25/2026
-#  - XMP-tiff:Copyright was STILL showing "?" instead of "©" even with
-#    -charset UTF8 set. Root cause: Git Bash hands argv to exiftool.exe
-#    (a native Win32 program) through a layer that can re-encode via the
-#    legacy console codepage before exiftool sees it, and that codepage
-#    has no "©" mapping. Fixed by writing the tag assignments to a
-#    temporary UTF-8 file and having exiftool read arguments from that
-#    file via "-@" instead of the command line - pure file I/O, no
-#    console/codepage translation involved.
+#  Revision 0.04 - Updated 07/25/2026
+#  - Gave up trying to write a literal "©" symbol into XMP:Copyright.
+#    Windows Git Bash consistently corrupted it into "?" no matter the
+#    approach (raw UTF-8 bytes, -charset UTF8, a UTF-8 -@ argfile) - the
+#    translation happens somewhere between Git Bash and exiftool.exe
+#    that none of those fixes reached. Both EXIF:Copyright and
+#    XMP:Copyright now use plain ASCII "(C)", which is unambiguous,
+#    legally equivalent to "©" as a copyright notice, and immune to any
+#    encoding issue on any platform.
 # Additional Comments:
 # see https://www.answers.com/Q/How_do_you_make_a_yes_no_command_in_cmd to add more features
 # ============================================================================
@@ -63,7 +50,6 @@
 # Edit these two values before running
 # ----------------------------------------------------------------------
 COPYRIGHT_HOLDER="jim_The_STEAMClown - www.steamclown.org"
-COPYRIGHT_SYMBOL=$(printf '\xc2\xa9')
 LICENSE_TAG="CC BY-SA 4.0"
 
 echo "----------------------------------------------------"
@@ -138,38 +124,21 @@ done
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 echo "[$TIMESTAMP] Running exiftool clean on $IMAGE_FILE"
 
-# Built above from explicit UTF-8 bytes (0xC2 0xA9) rather than a
-# literal © typed in the script. Windows Git Bash / non-UTF-8 console
-# codepages will mangle a literal © into "?" before exiftool ever sees
-# it; building it from raw bytes sidesteps that entirely.
-
-# Windows Git Bash hands command-line arguments to exiftool.exe (a native
-# Win32 program) through a layer that can re-encode them via the legacy
-# console codepage before exiftool ever sees them - and that codepage
-# usually has no mapping for "©", so it silently becomes "?" even with
-# -charset UTF8 set. The fix is to never pass the © symbol through argv
-# at all: write it to a UTF-8 file instead and have exiftool read its
-# arguments from that file with -@, which is pure file I/O and bypasses
-# the console/codepage layer entirely.
-ARGFILE=$(mktemp)
-{
-    echo "-all="
-    echo "-tagsFromFile"
-    echo "@"
-    echo "-Artist"
-    echo "-DateTimeOriginal"
-    echo "-CreateDate"
-    echo "-Orientation"
-    echo "-ColorSpace"
-    echo "-ICC_Profile:all"
-    printf -- '-Copyright=(c) %s %s\n' "$(date +%Y)" "$COPYRIGHT_HOLDER"
-    printf -- '-XMP-dc:Rights=%s\n' "$LICENSE_TAG"
-    printf -- '-XMP:Copyright=%s %s %s\n' "$COPYRIGHT_SYMBOL" "$(date +%Y)" "$COPYRIGHT_HOLDER"
-} > "$ARGFILE"
-
-exiftool -charset UTF8 -@ "$ARGFILE" -overwrite_original "$IMAGE_FILE"
+exiftool \
+    -all= \
+    -tagsFromFile @ \
+    -Artist \
+    -DateTimeOriginal \
+    -CreateDate \
+    -Orientation \
+    -ColorSpace \
+    -ICC_Profile:all \
+    -Copyright="(C) $(date +%Y) $COPYRIGHT_HOLDER" \
+    -XMP-dc:Rights="$LICENSE_TAG" \
+    -XMP:Copyright="(C) $(date +%Y) $COPYRIGHT_HOLDER" \
+    -overwrite_original \
+    "$IMAGE_FILE"
 EXIFTOOL_STATUS=$?
-rm -f "$ARGFILE"
 
 if [ $EXIFTOOL_STATUS -eq 0 ]; then
     echo " "
