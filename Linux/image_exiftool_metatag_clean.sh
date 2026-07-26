@@ -39,6 +39,13 @@
 #    codepage, which was still corrupting the © symbol on write even
 #    after it was built from raw bytes ("-charset ARGS=UTF8" is not a
 #    valid type in ExifTool 13.59 - plain "-charset UTF8" is correct)
+#  Revision 0.05 - Updated 07/25/2026
+#  - Removed "-api RequestAll=3" from the before/after audit commands.
+#    It was surfacing computed/virtual tags that aren't stored in the
+#    file (e.g. [System]FilePath, [ExifTool]NewGUID/NewUUID, the latter
+#    regenerated randomly on every run) alongside real embedded tags,
+#    which made the audit output confusing. "-G1 -a -s -U" alone still
+#    shows every real tag including duplicates, just without the noise.
 # Additional Comments:
 # see https://www.answers.com/Q/How_do_you_make_a_yes_no_command_in_cmd to add more features
 # ============================================================================
@@ -93,7 +100,7 @@ echo " "
 echo "----------------------------------------------------"
 echo "Current metadata (before clean):"
 echo "----------------------------------------------------"
-exiftool -G1 -a -s -U -api RequestAll=3 "$IMAGE_FILE"
+exiftool -G1 -a -s -U "$IMAGE_FILE"
 echo " "
 
 echo "----------------------------------------------------"
@@ -149,7 +156,7 @@ if [ $? -eq 0 ]; then
     echo "----------------------------------------------------"
     echo "Remaining metadata (after clean):"
     echo "----------------------------------------------------"
-    exiftool -G1 -a -s -U -api RequestAll=3 "$IMAGE_FILE"
+    exiftool -G1 -a -s -U "$IMAGE_FILE"
     echo " "
     echo "============================================"
     echo "  ____   ___  _   _ _____ "
