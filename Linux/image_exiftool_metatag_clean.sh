@@ -23,6 +23,22 @@
 #  - Preserves Artist, DateTimeOriginal, CreateDate, Orientation,
 #    ColorSpace, and full ICC color profile
 #  - Writes Copyright and XMP-dc:Rights (CC BY-SA 4.0) in the same pass
+#  Revision 0.02 - Updated 07/25/2026
+#  - EXIF:Copyright is ASCII-only per spec, so "(c)" is used there to
+#    avoid the "©" glyph getting corrupted across encodings
+#  - Real "©" symbol is now written to XMP:Copyright instead (XMP is
+#    UTF-8, so it displays correctly there)
+#  Revision 0.03 - Updated 07/25/2026
+#  - © symbol for XMP:Copyright is now built from raw UTF-8 bytes
+#    (0xC2 0xA9) via printf, instead of a literal © character in the
+#    script, since Windows Git Bash / non-UTF-8 console codepages were
+#    corrupting the literal character into "?" before exiftool saw it
+#  Revision 0.04 - Updated 07/25/2026
+#  - Added "-charset UTF8" so ExifTool treats command-line argument
+#    bytes as UTF-8 instead of reinterpreting them via the system
+#    codepage, which was still corrupting the © symbol on write even
+#    after it was built from raw bytes ("-charset ARGS=UTF8" is not a
+#    valid type in ExifTool 13.59 - plain "-charset UTF8" is correct)
 # Additional Comments:
 # see https://www.answers.com/Q/How_do_you_make_a_yes_no_command_in_cmd to add more features
 # ============================================================================
@@ -106,7 +122,12 @@ done
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 echo "[$TIMESTAMP] Running exiftool clean on $IMAGE_FILE"
 
-exiftool -charset ARGS=UTF8 \
+# Built above from explicit UTF-8 bytes (0xC2 0xA9) rather than a
+# literal © typed in the script. Windows Git Bash / non-UTF-8 console
+# codepages will mangle a literal © into "?" before exiftool ever sees
+# it; building it from raw bytes sidesteps that entirely.
+
+exiftool -charset UTF8 \
     -all= \
     -tagsFromFile @ \
     -Artist \
