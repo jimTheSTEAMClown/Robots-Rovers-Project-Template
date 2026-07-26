@@ -46,6 +46,15 @@
 #    regenerated randomly on every run) alongside real embedded tags,
 #    which made the audit output confusing. "-G1 -a -s -U" alone still
 #    shows every real tag including duplicates, just without the noise.
+#  Revision 0.06 - Updated 07/25/2026
+#  - XMP-tiff:Copyright was STILL showing "?" instead of "©" even with
+#    -charset UTF8 set. Root cause: Git Bash hands argv to exiftool.exe
+#    (a native Win32 program) through a layer that can re-encode via the
+#    legacy console codepage before exiftool sees it, and that codepage
+#    has no "©" mapping. Fixed by writing the tag assignments to a
+#    temporary UTF-8 file and having exiftool read arguments from that
+#    file via "-@" instead of the command line - pure file I/O, no
+#    console/codepage translation involved.
 # Additional Comments:
 # see https://www.answers.com/Q/How_do_you_make_a_yes_no_command_in_cmd to add more features
 # ============================================================================
@@ -134,22 +143,35 @@ echo "[$TIMESTAMP] Running exiftool clean on $IMAGE_FILE"
 # codepages will mangle a literal © into "?" before exiftool ever sees
 # it; building it from raw bytes sidesteps that entirely.
 
-exiftool -charset UTF8 \
-    -all= \
-    -tagsFromFile @ \
-    -Artist \
-    -DateTimeOriginal \
-    -CreateDate \
-    -Orientation \
-    -ColorSpace \
-    -ICC_Profile:all \
-    -Copyright="(c) $(date +%Y) $COPYRIGHT_HOLDER" \
-    -XMP-dc:Rights="$LICENSE_TAG" \
-    -XMP:Copyright="${COPYRIGHT_SYMBOL} $(date +%Y) $COPYRIGHT_HOLDER" \
-    -overwrite_original \
-    "$IMAGE_FILE"
+# Windows Git Bash hands command-line arguments to exiftool.exe (a native
+# Win32 program) through a layer that can re-encode them via the legacy
+# console codepage before exiftool ever sees them - and that codepage
+# usually has no mapping for "©", so it silently becomes "?" even with
+# -charset UTF8 set. The fix is to never pass the © symbol through argv
+# at all: write it to a UTF-8 file instead and have exiftool read its
+# arguments from that file with -@, which is pure file I/O and bypasses
+# the console/codepage layer entirely.
+ARGFILE=$(mktemp)
+{
+    echo "-all="
+    echo "-tagsFromFile"
+    echo "@"
+    echo "-Artist"
+    echo "-DateTimeOriginal"
+    echo "-CreateDate"
+    echo "-Orientation"
+    echo "-ColorSpace"
+    echo "-ICC_Profile:all"
+    printf -- '-Copyright=(c) %s %s\n' "$(date +%Y)" "$COPYRIGHT_HOLDER"
+    printf -- '-XMP-dc:Rights=%s\n' "$LICENSE_TAG"
+    printf -- '-XMP:Copyright=%s %s %s\n' "$COPYRIGHT_SYMBOL" "$(date +%Y)" "$COPYRIGHT_HOLDER"
+} > "$ARGFILE"
 
-if [ $? -eq 0 ]; then
+exiftool -charset UTF8 -@ "$ARGFILE" -overwrite_original "$IMAGE_FILE"
+EXIFTOOL_STATUS=$?
+rm -f "$ARGFILE"
+
+if [ $EXIFTOOL_STATUS -eq 0 ]; then
     echo " "
     echo "----------------------------------------------------"
     echo "Metadata cleaned successfully."
