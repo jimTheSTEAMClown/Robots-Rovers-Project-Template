@@ -106,7 +106,7 @@ done
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 echo "[$TIMESTAMP] Running exiftool clean on $IMAGE_FILE"
 
-exiftool exiftool -charset ARGS=UTF8 \
+exiftool -charset ARGS=UTF8 \
     -all= \
     -tagsFromFile @ \
     -Artist \
