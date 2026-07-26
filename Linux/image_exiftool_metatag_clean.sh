@@ -31,6 +31,7 @@
 # Edit these two values before running
 # ----------------------------------------------------------------------
 COPYRIGHT_HOLDER="jim_The_STEAMClown - www.steamclown.org"
+COPYRIGHT_SYMBOL=$(printf '\xc2\xa9')
 LICENSE_TAG="CC BY-SA 4.0"
 
 echo "----------------------------------------------------"
@@ -115,7 +116,7 @@ exiftool -all= \
     -ICC_Profile:all \
     -Copyright="(c) $(date +%Y) $COPYRIGHT_HOLDER" \
     -XMP-dc:Rights="$LICENSE_TAG" \
-    -XMP:Copyright="© $(date +%Y) $COPYRIGHT_HOLDER" \
+    -XMP:Copyright="${COPYRIGHT_SYMBOL} $(date +%Y) $COPYRIGHT_HOLDER" \
     -overwrite_original \
     "$IMAGE_FILE"
 
