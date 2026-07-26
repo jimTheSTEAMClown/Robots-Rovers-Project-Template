@@ -113,8 +113,9 @@ exiftool -all= \
     -Orientation \
     -ColorSpace \
     -ICC_Profile:all \
-    -Copyright="© $(date +%Y) $COPYRIGHT_HOLDER" \
+    -Copyright="(c) $(date +%Y) $COPYRIGHT_HOLDER" \
     -XMP-dc:Rights="$LICENSE_TAG" \
+    -XMP:Copyright="© $(date +%Y) $COPYRIGHT_HOLDER" \
     -overwrite_original \
     "$IMAGE_FILE"
 
